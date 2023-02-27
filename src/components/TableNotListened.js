@@ -29,7 +29,7 @@ useEffect(()=>{
     <Table striped bordered hover>
       <thead>
         <tr>
-          <th>#</th>
+          <th width='80px'>#</th>
           <th>Nome</th>
           <th>Banda</th>
           <th>Data</th>
@@ -40,7 +40,7 @@ useEffect(()=>{
 
         {
           todos?.map((todo,i)=>(
-              <tr key={i}>
+              <tr key={i} >
                 <td className='flex items-center'><img src={todo.logo} width='60px'></img></td>
                 <td><a href={todo.link}>{todo.name}</a></td>
                 <td>{todo.band}</td>

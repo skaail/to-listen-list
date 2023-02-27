@@ -20,23 +20,6 @@ function SearchAlbum() {
     };
 
     const handleSave = async (e) => {
-      e.preventDefault();  
-       
-        try {
-            const docRef = await addDoc(collection(db, "todos"), {
-              aberto: true,
-              ano: '2002',
-              banda: 'teste',
-              link: 'teste',
-              motivo: 'teste',
-              name: 'teste',
-              onde: '4'
-            });
-            console.log("Document written with ID: ", docRef.id);
-          } catch (e) {
-            console.error("Error adding document: ", e);
-          }
-
       setShow(false)
     };
 
