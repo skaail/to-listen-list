@@ -37,10 +37,9 @@ const handleClose = () => {
 };
 
 const handleSave = async (e) => {
-  const washingtonRef = doc(db, "todos", albumID);
+  const albumref = doc(db, "todos", albumID);
 
-  // Set the "capital" field of the city 'DC'
-  await updateDoc(washingtonRef, {
+  await updateDoc(albumref, {
     nota: nota
   });
   setShow(false)
