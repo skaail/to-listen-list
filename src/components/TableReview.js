@@ -5,7 +5,7 @@ import {db} from '../firebase';
 import { useState, useEffect} from 'react'
 
 
-function TableNotListened() {
+function TableReview() {
   const [todos, setTodos] = useState([]);
 
   const fetchPost = async () => {
@@ -33,7 +33,7 @@ useEffect(()=>{
           <th>Nome</th>
           <th>Banda</th>
           <th>Data</th>
-          <th>Fazer Review</th>
+          <th>Nota</th>
         </tr>
       </thead>
       <tbody>
@@ -41,16 +41,18 @@ useEffect(()=>{
         {
           todos?.map((todo,i)=>{
             if(todo.nota == ''){
-              return(
-                <tr key={i} >
-                  <td className='flex items-center'><img src={todo.logo} width='60px'></img></td>
-                  <td><a href={todo.link}>{todo.name}</a></td>
-                  <td>{todo.band}</td>
-                  <td>{todo.data}</td>
-                  <td>Review</td>
-                </tr>
-              )
-            }else{}
+              
+            }else{
+                return(
+                    <tr key={i} >
+                      <td className='flex items-center'><img src={todo.logo} width='60px'></img></td>
+                      <td><a href={todo.link}>{todo.name}</a></td>
+                      <td>{todo.band}</td>
+                      <td>{todo.data}</td>
+                      <td>{todo.nota}</td>
+                    </tr>
+                  )
+            }
           })
         }
       </tbody>
@@ -58,4 +60,4 @@ useEffect(()=>{
   )
 }
 
-export default TableNotListened
+export default TableReview
