@@ -2,11 +2,18 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, InputGroup, FormControl, Button, Row, Card } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
+import Modal from 'react-bootstrap/Modal';
+
 
 const CLIENT_ID = "47d629387eff4cc2a731e7f2c290302e"
 const CLIENT_SECRET = "5bcf17b2ac36460480687f83171004ae"
 
 function SearchAlbum() {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const [searchInput, setSearchInput] = useState("")
     const [accessToken, setAccessToekn] = useState("")
     const [albums, setAlbums] = useState([])
@@ -52,7 +59,16 @@ function SearchAlbum() {
 
 
   return (
-    <div>
+    <>
+    <Button variant="primary" onClick={handleShow}>
+      Pesquisar Album
+    </Button>
+
+    <Modal show={show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Buscar Albums</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
       <Container>
         <InputGroup className='mb-3' size='lg'>
           <FormControl 
@@ -89,7 +105,10 @@ function SearchAlbum() {
           })}
         </Row>
       </Container>
-    </div>
+      </Modal.Body>
+    </Modal>
+  </>
+
   )
 }
 
