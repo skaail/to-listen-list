@@ -10,7 +10,7 @@ import Ranking from './pages/Ranking';
 
 function App() {
   return (
-    <>
+    <div className='flex flex-row'>
 
     <Sidebar />
 
@@ -24,7 +24,7 @@ function App() {
         <Route path='/ranking' element={<Ranking />} />
       </Routes>
     </BrowserRouter>
-    </>
+    </div>
 
   );
 }

@@ -8,7 +8,7 @@ import { AiFillHome } from "react-icons/ai";
 
 function Sidebar() {
   return (
-    <div className="flex float-left">
+    <div className="flex">
     <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
         <div className="space-y-3">
             <div className="flex items-center">
