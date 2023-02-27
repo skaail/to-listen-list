@@ -1,6 +1,6 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, updateDoc , doc } from "firebase/firestore";
 import {db} from '../firebase';
 import { Container, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { useState, useEffect} from 'react'
@@ -10,6 +10,9 @@ import Modal from 'react-bootstrap/Modal';
 function TableNotListened() {
   const [todos, setTodos] = useState([]);
   const [album, setAlbum] = useState("")
+  const [albumID, setAlbumID] = useState("")
+
+  const [nota, setNota] = useState('')
 
   const [show, setShow] = useState(false);
 
@@ -34,16 +37,20 @@ const handleClose = () => {
 };
 
 const handleSave = async (e) => {
+  const washingtonRef = doc(db, "todos", albumID);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(washingtonRef, {
+    nota: nota
+  });
   setShow(false)
+  window.location.reload(false);
 };
 
 const handleShow = () => {
   setShow(true)
 };
 
-function handleClick() {
-  console.log(album)
-}
 
 
   return (
@@ -56,6 +63,11 @@ function handleClick() {
       <Modal.Body>
       <Container>
         <InputGroup className='mb-3' size='lg'>
+        <FormControl 
+            placeholder='Digite a nota'
+            type='input'
+            onChange={e => {setNota(e.target.value)}}
+          />
         </InputGroup>
       </Container>
       </Modal.Body>
@@ -64,7 +76,7 @@ function handleClick() {
           Fechar
         </Button>
         <Button variant="primary" onClick={handleSave}>
-          Adicionar a lista
+          Salvar
         </Button>
       </Modal.Footer>
     </Modal>
@@ -92,7 +104,7 @@ function handleClick() {
                   <td>{todo.band}</td>
                   <td>{todo.data}</td>
                   <td>
-                    <Button onClick={() => {setAlbum(todo.name); handleClick(); handleShow()}}>Fazer Review</Button>
+                    <Button onClick={() => {setAlbumID(todo.id); setAlbum(todo.name); handleShow()}}>Fazer Review</Button>
                     </td>
                 </tr>
               )

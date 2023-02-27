@@ -21,6 +21,7 @@ function SearchAlbum() {
 
     const handleSave = async (e) => {
       setShow(false)
+      window.location.reload(false);
     };
 
     const handleShow = () => {
