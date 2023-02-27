@@ -9,7 +9,7 @@ import { AiFillHome } from "react-icons/ai";
 function Sidebar() {
   return (
     <div className="flex">
-    <div className="flex flex-col h-screen p-3 bg-white shadow w-60">
+    <div className="flex flex-col h-full p-3 bg-white shadow w-60">
         <div className="space-y-3">
             <div className="flex items-center">
                 <h2 className="text-xl font-bold">Music Match</h2>
