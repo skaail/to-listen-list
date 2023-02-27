@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import { collection, getDocs } from "firebase/firestore";
 import {db} from '../firebase';
 import { useState, useEffect} from 'react'
+import { Button } from 'react-bootstrap';
 
 
 function TableNotListened() {
@@ -40,14 +41,14 @@ useEffect(()=>{
 
         {
           todos?.map((todo,i)=>{
-            if(todo.nota == ''){
+            if(todo.nota === ''){
               return(
                 <tr key={i} >
                   <td className='flex items-center'><img src={todo.logo} width='60px'></img></td>
                   <td><a href={todo.link}>{todo.name}</a></td>
                   <td>{todo.band}</td>
                   <td>{todo.data}</td>
-                  <td>Review</td>
+                  <td><Button>Fazer Review</Button></td>
                 </tr>
               )
             }else{}
