@@ -1,35 +1,54 @@
 import React from 'react'
 import Table from 'react-bootstrap/Table';
+import { collection, getDocs } from "firebase/firestore";
+import {db} from '../firebase';
+import { useState, useEffect} from 'react'
+
 
 function TableNotListened() {
+  const [todos, setTodos] = useState([]);
+
+  const fetchPost = async () => {
+       
+    await getDocs(collection(db, "todos"))
+        .then((querySnapshot)=>{               
+            const newData = querySnapshot.docs
+                .map((doc) => ({...doc.data(), id:doc.id }));
+            setTodos(newData);                
+            console.log(todos, newData);
+        })
+   
+}
+
+useEffect(()=>{
+    fetchPost();
+}, [])
+
+
   return (
     <Table striped bordered hover>
       <thead>
         <tr>
           <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
+          <th>Nome</th>
+          <th>Banda</th>
+          <th>Data</th>
+          <th>Fazer Review</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td colSpan={2}>Larry the Bird</td>
-          <td>@twitter</td>
-        </tr>
+
+        {
+          todos?.map((todo,i)=>(
+              <tr key={i}>
+                <td className='flex items-center'><img src={todo.logo} width='60px'></img></td>
+                <td><a href={todo.link}>{todo.name}</a></td>
+                <td>{todo.band}</td>
+                <td>{todo.data}</td>
+                <td>Review</td>
+              </tr>
+          ))
+        }
       </tbody>
     </Table>
   )
