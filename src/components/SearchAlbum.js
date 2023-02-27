@@ -4,15 +4,46 @@ import { Container, InputGroup, FormControl, Button, Row, Card } from 'react-boo
 import { useState, useEffect } from 'react'
 import Modal from 'react-bootstrap/Modal';
 
+import { collection, addDoc } from "firebase/firestore";
+import {db} from '../firebase';
+
 
 const CLIENT_ID = "47d629387eff4cc2a731e7f2c290302e"
 const CLIENT_SECRET = "5bcf17b2ac36460480687f83171004ae"
 
 function SearchAlbum() {
     const [show, setShow] = useState(false);
+    const [todo, setTodo] = useState("")
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => {
+      setShow(false)
+    };
+
+    const handleSave = async (e) => {
+      e.preventDefault();  
+       
+        try {
+            const docRef = await addDoc(collection(db, "todos"), {
+              aberto: true,
+              ano: '2002',
+              banda: 'teste',
+              link: 'teste',
+              motivo: 'teste',
+              name: 'teste',
+              onde: '4'
+            });
+            console.log("Document written with ID: ", docRef.id);
+          } catch (e) {
+            console.error("Error adding document: ", e);
+          }
+
+      setShow(false)
+    };
+
+    const handleShow = () => {
+      setShow(true)
+    };
+
 
     const [searchInput, setSearchInput] = useState("")
     const [accessToken, setAccessToekn] = useState("")
@@ -42,19 +73,28 @@ function SearchAlbum() {
           'Authorization' : 'Bearer ' + accessToken
         }
       }
-  
-      var artistID = await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=artist', artistParameters)
-        .then(response => response.json())
-        .then(data => { return data.artists.items[0].id })
-      
-  
-  
-      var returnAlbums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums?include_groups=album&market=US&limit=50', artistParameters)
+
+      var returnAlbums = await fetch('https://api.spotify.com/v1/search?q=' + searchInput + '&type=album', artistParameters)
       .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setAlbums(data.items)
+      .then(async data => {
+        console.log(data.albums.items[0])
+        try {
+          const docRef = await addDoc(collection(db, "todos"), {
+            name: data.albums.items[0].name,
+            data: data.albums.items[0].release_date,
+            band: data.albums.items[0].artists[0].name,
+            link: data.albums.items[0].external_urls.spotify,
+            logo: data.albums.items[0].images[0].url,
+            aberto: true,
+            nota: ''
+          });
+          console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
       })
+
+
     }
 
 
@@ -81,7 +121,6 @@ function SearchAlbum() {
             }}
             onChange={e => {
               setSearchInput(e.target.value)
-              search()
             }}
           />
 
@@ -90,22 +129,15 @@ function SearchAlbum() {
           </Button>
         </InputGroup>
       </Container>
-
-      <Container>
-        <Row className='mx-2 row row-cols-4'>
-          {albums.map((album, i) =>{
-            return (
-              <Card>
-                <Card.Img src={album.images[0].url} />
-                <Card.Body>
-                  <Card.Title>{album.name}</Card.Title>
-                </Card.Body>
-              </Card>
-            )
-          })}
-        </Row>
-      </Container>
       </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Fechar
+        </Button>
+        <Button variant="primary" onClick={handleSave}>
+          Adicionar a lista
+        </Button>
+      </Modal.Footer>
     </Modal>
   </>
 
