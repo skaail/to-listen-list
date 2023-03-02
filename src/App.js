@@ -7,6 +7,7 @@ import Profile from './pages/Profile';
 import List from './pages/List';
 import Review from './pages/Review';
 import Ranking from './pages/Ranking';
+import Aleatorio from './pages/Aleatorio';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/list' element={<List />} />
         <Route path='/review' element={<Review />} />
         <Route path='/ranking' element={<Ranking />} />
+        <Route path='/aleatorio' element={<Aleatorio />} />
       </Routes>
     </BrowserRouter>
     </div>

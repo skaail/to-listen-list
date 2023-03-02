@@ -78,6 +78,8 @@ function SearchAlbum() {
         }
       })
 
+      alert('Adicionado')
+
 
     }
 

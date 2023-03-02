@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { IoMdPerson, IoIosList } from "react-icons/io";
-import { MdOutlineRateReview } from "react-icons/md";
+import { MdOutlineRateReview, MdToday } from "react-icons/md";
 import { GiPodium } from "react-icons/gi";
 import { AiFillHome } from "react-icons/ai";
 
@@ -9,7 +9,7 @@ import { AiFillHome } from "react-icons/ai";
 function Sidebar() {
   return (
     <div className="flex">
-    <div className="flex flex-col h-screen p-3 bg-white shadow w-">
+    <div className="flex flex-col p-3 bg-white shadow w-">
         <div className="space-y-3">
             <div className="flex items-center">
                 <h2 className="text-xl font-bold">Music Match</h2>
@@ -48,6 +48,13 @@ function Sidebar() {
                         <a href="/ranking" className="flex items-center p-2 space-x-3 rounded-md">
                             <GiPodium></GiPodium>
                             <span>Ranking</span>
+                        </a>
+                    </li>
+
+                    <li className="rounded-sm">
+                        <a href="/aleatorio" className="flex items-center p-2 space-x-3 rounded-md">
+                            <MdToday></MdToday>
+                            <span>Aleatório</span>
                         </a>
                     </li>
                 </ul>

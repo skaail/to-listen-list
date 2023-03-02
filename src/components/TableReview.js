@@ -40,7 +40,7 @@ useEffect(()=>{
 
         {
           todos?.map((todo,i)=>{
-            if(todo.nota == ''){
+            if(todo.nota === ''){
               
             }else{
                 return(
